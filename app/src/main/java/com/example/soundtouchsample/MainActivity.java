@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -35,19 +34,19 @@ public class MainActivity extends AppCompatActivity implements Callback {
         mVolumeText = findViewById(R.id.labelVolume);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ImageButton fab = findViewById(R.id.findSpeaker);
-        fab.setOnClickListener(new View.OnClickListener() {
+        ImageButton button = findViewById(R.id.findSpeaker);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 (new NWClient()).findSoundTouch(findViewById(R.id.labelIPAddress), null);
             }
         });
-
-        fab = findViewById(R.id.volumeButton);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //reduce, reuse, recycle - can use one local variable for both listeners
+        button = findViewById(R.id.volumeButton);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "show the volume here", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "show status indicator here?", Snackbar.LENGTH_LONG).show();
                 NWClient.getVolume(MainActivity.this);
             }
         });
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements Callback {
             Snackbar.make(findViewById(R.id.findSpeaker), "add some settings", Snackbar.LENGTH_LONG).show();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -111,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements Callback {
         showResult(vol_response);
     }
 
+    /**
+     * Display the result from the API call to the user on the main thread
+     * @param parseResult - API result to display
+     */
     private void showResult(final String parseResult) {
         //network response is an Async callback coming in on a separate thread
         runOnUiThread(new Runnable() {
