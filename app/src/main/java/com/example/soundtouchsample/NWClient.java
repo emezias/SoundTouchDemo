@@ -17,7 +17,7 @@ import okhttp3.Request;
 
 public class NWClient {
     private static final String TAG = NWClient.class.getSimpleName();
-    private static final String APP_KEY = "Ln5MXIhIZQA8GnvKo4jxGKCNGQ9zJOoG";
+    private static final String APP_KEY = "put your app key here";
     private static final String SOUNDTOUCH_SVC = "urn:schemas-upnp-org:device:MediaRenderer:1";
     /*
     API notes
